@@ -1,33 +1,96 @@
-# **CT-Scan Analysis for Lung Masking and Infection Identification**
+# 🫁 CT Scan Analysis & Lung Infection Detection
 
-## **Introduction**
-This repository contains Python code that uses machine learning and image processing techniques to perform various operations on CT scan images. The operations include loading and visualizing the CT scan images, creating a histogram of the scan, and using K-Means for clustering to identify different regions of the image.
+This project provides a **machine learning-driven pipeline** to analyze **CT scan images** for lung segmentation and detection of **Ground Glass Opacities (GGO)** — a critical indicator of infections like **COVID-19**. The code integrates clustering algorithms and medical image processing techniques to **quantify infection severity** in each lung.
 
-The primary function of this code is to identify the lungs in a CT scan and further detect Ground Glass Opacities (GGO), a common feature in lung infections such as COVID-19. This is accomplished by applying K-Means clustering and DBSCAN (Density-Based Spatial Clustering of Applications with Noise).
+---
 
-## **Dependencies**
-The script requires the following Python libraries:
-* NumPy
-* NiBabel
-* Matplotlib
-* scikit-learn
-* itertools
+## 📌 Features
 
-You can install them using pip:
+* **CT Scan Preprocessing**: Reads `.nii` files (Neuroimaging Informatics Technology Initiative format) and visualizes CT slices.
+* **K-Means Clustering**: Segments CT images into regions of interest for lung and tissue detection.
+* **DBSCAN Clustering**: Identifies and isolates **lungs** using density-based spatial clustering.
+* **Ground Glass Opacities (GGO) Detection**: Highlights infection-prone regions in the lungs.
+* **Infection Measurement**: Quantifies severity separately for **left** and **right** lungs.
+* **Visualizations**: Generates histograms, segmented images, and infection overlays.
 
+---
+
+## 🧠 Methodology Highlights
+
+1. **Data Input & Visualization**
+
+   * Loads CT scans in `.nii` format using **NiBabel**.
+   * Visualizes individual slices to analyze lung structures.
+
+2. **Image Segmentation**
+
+   * Uses **K-Means clustering** to reduce image colors and segment anatomical regions.
+   * Refines segmentation to focus on lungs using **DBSCAN** clustering.
+
+3. **GGO Detection**
+
+   * Extracts Ground Glass Opacities — regions often linked to early infection patterns.
+
+4. **Infection Quantification**
+
+   * Calculates severity scores for left and right lungs individually.
+
+---
+
+## 🛠️ Dependencies
+
+Install required Python libraries via `pip`:
+
+```bash
 pip install numpy nibabel matplotlib scikit-learn
+```
 
-## **Usage**
+**Libraries Used:**
 
-The script operates on a single slice of a CT scan, specified by the index. It reads .nii files (Neuroimaging Informatics Technology Initiative) which is a standard format for storing medical imaging data.
-Functions
+* [NumPy](https://numpy.org/) — numerical operations
+* [NiBabel](https://nipy.org/nibabel/) — `.nii` CT scan file reading
+* [Matplotlib](https://matplotlib.org/) — visualization
+* [Scikit-learn](https://scikit-learn.org/) — clustering (K-Means, DBSCAN)
+* [itertools](https://docs.python.org/3/library/itertools.html) — combinatorial tools
 
-    read_nii(filepath): Reads the CT scan from the file and stores it in an array.
-    hist(): Plots a histogram of CT scan values.
-    Kmeans(Ncluster, ifind): Applies K-means clustering on the CT scan and displays the original and quantized images.
-    find_lungs(eps, min_samples): Applies DBSCAN clustering on the CT scan and displays the identified left and right lung masks.
-    final_lung_masks(): Improves the lung masks and displays the final left and right lung masks.
-    find_GGO(): Applies a filter on the CT scan to identify Ground Glass Opacities (GGO) and displays the original image with GGO.
-    infection_meas(): Measures the extent of infection in the lungs.
+---
 
-Please note that all images are displayed using matplotlib's imshow function.
+## ▶️ Usage
+
+```bash
+python main.py
+```
+
+### Workflow Steps:
+
+* Read `.nii` CT scan files.
+* Perform **K-Means** segmentation to extract lung structures.
+* Use **DBSCAN** clustering to isolate lungs.
+* Detect **Ground Glass Opacities**.
+* Output infection severity per lung.
+
+---
+
+## 📊 Example Output
+
+* **Lung segmentation masks**
+* **Highlighted Ground Glass Opacities**
+* Infection severity scores:
+
+  ```
+  Left lung infection severity  : 0.27
+  Right lung infection severity : 0.35
+  ```
+
+---
+
+## 📂 Project Structure
+
+```
+CT_Scan_Analysis/
+├── sub/
+│   └── CTscan.py          # Core processing class
+├── main.py                # Main execution script
+└── README.md
+└── Report.pdf
+```
